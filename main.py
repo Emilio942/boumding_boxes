@@ -4,10 +4,13 @@ import os
 
 app = Flask(__name__)
 json_dateipfad = "./objekte.json"
-# Startseite, die das Interface anzeigt
+# Der Pfad zum aktuellen Verzeichnis
+current_directory = os.getcwd()
+
 @app.route('/')
 def home():
-    return send_from_directory(app.static_folder, 'index.html')
+    # Verwendet das aktuelle Verzeichnis, um index.html zu senden
+    return send_from_directory(current_directory, 'index.html'
 
 # Kategorien basierend auf Ordnern lesen
 @app.route('/api/kategorien', methods=['GET'])
