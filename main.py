@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import json
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.')
 json_dateipfad = "./objekte.json"
 # Der Pfad zum aktuellen Verzeichnis
 current_directory = os.getcwd()
