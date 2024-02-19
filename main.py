@@ -35,6 +35,7 @@ def speichere_objekt_daten():
     with open(json_dateipfad, 'w') as datei:
         json.dump(objekte, datei, indent=4)
     return jsonify({"status": "Erfolg", "message": "Daten gespeichert"})
+
 # Zusätzliche Route, um Bilder aus den Kategorien-Unterordnern auszuliefern
 @app.route('/img/<kategorie>/<bildname>')
 def kategorie_bild(kategorie, bildname):
