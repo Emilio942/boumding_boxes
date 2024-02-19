@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0; /* Grauer Hintergrund */
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
     display: flex;
@@ -16,7 +16,7 @@ body {
 #fortschritt {
     background-color: #4CAF50;
     height: 100%;
-    width: 20%; /* Initialer Fortschrittsbalken */
+    width: 20%;
     text-align: center;
     color: white;
 }
@@ -28,12 +28,12 @@ body {
     overflow-y: auto;
     position: fixed;
     left: 0;
-    top: 20px; /* Platz für den Fortschrittsbalken */
+    top: 20px;
     padding: 10px;
 }
 
 #bildContainer {
-    margin-left: 200px; /* Platz für Kategorienliste */
+    margin-left: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
