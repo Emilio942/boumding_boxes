@@ -4,6 +4,17 @@ import os
 
 app = Flask(__name__)
 json_dateipfad = "./objekte.json"
+# Startseite, die das Interface anzeigt
+@app.route('/')
+def home():
+    return send_from_directory(app.static_folder, 'index.html')
+
+# Kategorien basierend auf Ordnern lesen
+@app.route('/api/kategorien', methods=['GET'])
+def get_kategorien():
+    kategorien = [name for name in os.listdir(kategorien_pfad)
+                  if os.path.isdir(os.path.join(kategorien_pfad, name))]
+    return jsonify(kategorien)
 
 @app.route('/api/objekt_daten', methods=['POST'])
 def speichere_objekt_daten():
