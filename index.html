@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Kategorienansicht</title>
+    <title>Groundboxen</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,6 +18,12 @@
         #inhalt {
             flex-grow: 1;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        canvas {
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -26,9 +32,10 @@
         <!-- Kategorien werden hier durch JavaScript dynamisch geladen -->
     </div>
     <div id="inhalt">
-        <!-- Inhalt wechselt automatisch basierend auf der Auswahl oder einem Timer -->
+        <canvas id="groundboxCanvas" width="640" height="480"></canvas>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
