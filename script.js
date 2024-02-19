@@ -40,9 +40,25 @@ document.addEventListener('DOMContentLoaded', function() {
             kategorien.forEach(kategorie => {
                 const div = document.createElement('div');
                 div.textContent = kategorie;
+                div.onclick = function() {
+                    // Bildpfad muss entsprechend angepasst werden
+                    const bildpfad = `/img/${kategorie}/deinBild.png`; // oder .jpg
+                    const img = document.createElement('img');
+                    img.src = bildpfad;
+                    img.onload = function() {
+                        // Stelle sicher, dass das alte Bild entfernt wird, bevor ein neues hinzugefügt wird
+                        const bildContainer = document.getElementById('bildContainer');
+                        bildContainer.innerHTML = '';
+                        bildContainer.appendChild(img);
+                    };
+                    img.onerror = function() {
+                        console.error('Bild konnte nicht geladen werden.');
+                    };
+                };
                 kategorienListe.appendChild(div);
             });
         })
         .catch(error => console.error('Fehler beim Laden der Kategorien:', error));
 });
+
 
