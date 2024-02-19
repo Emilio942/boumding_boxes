@@ -1,64 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const canvas = document.getElementById('groundboxCanvas');
+    const kategorienListe = document.getElementById('kategorienListe');
+    const bildContainer = document.getElementById('bildContainer');
+    const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     let isDrawing = false;
-    let startX = 0;
-    let startY = 0;
+    let startX, startY;
 
-    canvas.addEventListener('mousedown', (e) => {
+    // Canvas-Styling und -Eigenschaften
+    canvas.width = 800;  // Breite anpassen
+    canvas.height = 600; // Höhe anpassen
+    canvas.style.border = '1px solid black';
+    bildContainer.appendChild(canvas);
+
+    // Funktion zum Zeichnen der Bounding Box
+    function drawBox(x, y, width, height) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Vorheriges Zeichnen löschen
+        ctx.beginPath();
+        ctx.rect(x, y, width, height);
+        ctx.stroke();
+    }
+
+    // Canvas-Event-Handler
+    canvas.onmousedown = (e) => {
         startX = e.offsetX;
         startY = e.offsetY;
         isDrawing = true;
-    });
+    };
 
-    canvas.addEventListener('mousemove', (e) => {
-        if (isDrawing === true) {
-            drawBox(ctx, startX, startY, e.offsetX, e.offsetY);
+    canvas.onmousemove = (e) => {
+        if (isDrawing) {
+            drawBox(startX, startY, e.offsetX - startX, e.offsetY - startY);
         }
-    });
+    };
 
-    canvas.addEventListener('mouseup', (e) => {
-        if (isDrawing === true) {
-            drawBox(ctx, startX, startY, e.offsetX, e.offsetY);
-            isDrawing = false;
-        }
-    });
+    canvas.onmouseup = () => {
+        isDrawing = false;
+    };
 
-    function drawBox(ctx, startX, startY, endX, endY) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-        ctx.beginPath();
-        ctx.rect(startX, startY, endX - startX, endY - startY);
-        ctx.stroke();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/kategorien')
-        .then(response => response.json())
-        .then(kategorien => {
-            const kategorienListe = document.getElementById('kategorienListe');
-            kategorien.forEach(kategorie => {
-                const div = document.createElement('div');
-                div.textContent = kategorie;
-                div.onclick = function() {
-                    // Bildpfad muss entsprechend angepasst werden
-                    const bildpfad = `/img/${kategorie}/deinBild.png`; // oder .jpg
-                    const img = document.createElement('img');
-                    img.src = bildpfad;
-                    img.onload = function() {
-                        // Stelle sicher, dass das alte Bild entfernt wird, bevor ein neues hinzugefügt wird
-                        const bildContainer = document.getElementById('bildContainer');
-                        bildContainer.innerHTML = '';
-                        bildContainer.appendChild(img);
-                    };
-                    img.onerror = function() {
-                        console.error('Bild konnte nicht geladen werden.');
-                    };
-                };
-                kategorienListe.appendChild(div);
+    // Funktion zum Laden der Kategorien vom Server
+    function loadCategories() {
+        fetch('/api/kategorien')
+            .then(response => response.json())
+            .then(kategorien => {
+                kategorien.forEach(kategorie => {
+                    const kategorieDiv = document.createElement('div');
+                    kategorieDiv.textContent = kategorie;
+                    kategorieDiv.classList.add('kategorie');
+                    kategorienListe.appendChild(kategorieDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Fehler beim Laden der Kategorien:', error);
             });
-        })
-        .catch(error => console.error('Fehler beim Laden der Kategorien:', error));
+    }
+
+    loadCategories(); // Kategorien beim Start laden
 });
-
-
