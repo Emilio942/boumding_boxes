@@ -28,6 +28,28 @@ def lese_oder_erstelle_datei():
         with open(json_dateipfad, 'w') as datei:
             json.dump([], datei)
     with open(json_dateipfad, 'r') as datei:
+from flask import Flask, jsonify, request, send_from_directory
+import os
+
+app = Flask(__name__, static_folder='frontend')
+
+kategorien_pfad = './kategorien'  # Pfad zum Kategorien-Ordner
+
+# Startseite, die das Interface anzeigt
+@app.route('/')
+def home():
+    return send_from_directory(app.static_folder, 'index.html')
+
+# Kategorien basierend auf Ordnern lesen
+@app.route('/api/kategorien', methods=['GET'])
+def get_kategorien():
+    kategorien = [name for name in os.listdir(kategorien_pfad)
+                  if os.path.isdir(os.path.join(kategorien_pfad, name))]
+    return jsonify(kategorien)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
         return json.load(datei)
 
 if __name__ == '__main__':

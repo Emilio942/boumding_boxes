@@ -17,3 +17,20 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Fehler beim Laden der Daten:', error));
 });
+
+
+
+function ladeKategorien() {
+    const kategorien = ['Kategorie 1', 'Kategorie 2', 'Kategorie 3']; // Beispielkategorien
+    const kategorienListe = document.getElementById('kategorienListe');
+    kategorien.forEach(kategorie => {
+        const div = document.createElement('div');
+        div.textContent = kategorie;
+        kategorienListe.appendChild(div);
+    });
+}
+
+function zeigeBild(bildPfad) {
+    const bild = document.getElementById('aktuellesBild');
+    bild.src = bildPfad;
+}
