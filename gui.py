@@ -66,7 +66,7 @@ class BoundingBoxApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    img_folder = "Pfad/zu/deinem/Bildordner"  # Anpassen an deinen Pfad
+    img_folder = "./img"  # Anpassen an deinen Pfad
     obj_data_file = "objekte.json"
     app = BoundingBoxApp(root, img_folder, obj_data_file)
     root.mainloop()
