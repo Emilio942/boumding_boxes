@@ -2,27 +2,31 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kategorienverwaltung</title>
+    <title>Kategorienansicht</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+        }
+        #kategorienListe {
+            width: 200px;
+            height: 100vh;
+            overflow-y: auto;
+            background-color: #f0f0f0;
             padding: 20px;
         }
-
-        .kategorie-container {
-            margin-bottom: 20px;
+        #inhalt {
+            flex-grow: 1;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-    <h2>Kategorienverwaltung</h2>
-    <div class="kategorie-container" id="kategorieContainer">
-        <!-- Kategorien werden hier geladen -->
+    <div id="kategorienListe">
+        <!-- Kategorien werden hier durch JavaScript dynamisch geladen -->
     </div>
-    <div>
-        <input type="text" id="kategorieName" placeholder="Kategoriename">
-        <button onclick="kategorieHinzufuegen()">Kategorie hinzufügen</button>
+    <div id="inhalt">
+        <!-- Inhalt wechselt automatisch basierend auf der Auswahl oder einem Timer -->
     </div>
 
     <script src="script.js"></script>
