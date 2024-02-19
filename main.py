@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 import json
-import uuid
 import os
 
 app = Flask(__name__)
@@ -9,13 +8,22 @@ json_dateipfad = "./objekte.json"
 @app.route('/api/objekt_daten', methods=['POST'])
 def speichere_objekt_daten():
     daten = request.json
+    bild_id = daten['bild_id']  # Nehmen wir an, dass die Bild-ID im Body enthalten ist
     kategorie = daten['kategorie']
-    koordinaten = daten['koordinaten']
+    position = daten.get('position', {})
+    groesse = daten.get('groesse', {})
+
     objekte = lese_oder_erstelle_datei()
+    
+    # Überprüfen, ob die Bild-ID bereits existiert
+    if any(objekt['bild_id'] == bild_id for objekt in objekte):
+        return jsonify({"status": "Fehler", "message": "Bild bereits bearbeitet"}), 400
+
     objekt = {
-        "bild_id": str(uuid.uuid4()),
+        "bild_id": bild_id,
         "kategorie": kategorie,
-        "koordinaten": koordinaten
+        "position": position,
+        "groesse": groesse
     }
     objekte.append(objekt)
     with open(json_dateipfad, 'w') as datei:
@@ -28,28 +36,6 @@ def lese_oder_erstelle_datei():
         with open(json_dateipfad, 'w') as datei:
             json.dump([], datei)
     with open(json_dateipfad, 'r') as datei:
-from flask import Flask, jsonify, request, send_from_directory
-import os
-
-app = Flask(__name__, static_folder='frontend')
-
-kategorien_pfad = './kategorien'  # Pfad zum Kategorien-Ordner
-
-# Startseite, die das Interface anzeigt
-@app.route('/')
-def home():
-    return send_from_directory(app.static_folder, 'index.html')
-
-# Kategorien basierend auf Ordnern lesen
-@app.route('/api/kategorien', methods=['GET'])
-def get_kategorien():
-    kategorien = [name for name in os.listdir(kategorien_pfad)
-                  if os.path.isdir(os.path.join(kategorien_pfad, name))]
-    return jsonify(kategorien)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
         return json.load(datei)
 
 if __name__ == '__main__':
