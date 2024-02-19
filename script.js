@@ -18,6 +18,25 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Fehler beim Laden der Daten:', error));
 });
 
+function kategorieHinzufuegen() {
+    const kategorieName = document.getElementById('kategorieName').value;
+
+    fetch('/api/kategorie_hinzufuegen', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: kategorieName }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        // Hier könnten Sie die Kategorienliste aktualisieren
+    })
+    .catch(error => {
+        console.error('Fehler beim Hinzufügen der Kategorie:', error);
+    });
+}
 
 
 function ladeKategorien() {
@@ -33,4 +52,41 @@ function ladeKategorien() {
 function zeigeBild(bildPfad) {
     const bild = document.getElementById('aktuellesBild');
     bild.src = bildPfad;
+}
+document.addEventListener('DOMContentLoaded', function() {
+    kategorienLaden();
+});
+
+function kategorienLaden() {
+    fetch('/api/kategorien')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('kategorieContainer');
+            container.innerHTML = ''; // Container leeren
+            data.forEach(kategorie => {
+                const div = document.createElement('div');
+                div.textContent = kategorie;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => console.error('Fehler beim Laden der Kategorien:', error));
+}
+
+function kategorieHinzufuegen() {
+    const kategorieName = document.getElementById('kategorieName').value;
+    fetch('/api/kategorie_hinzufuegen', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: kategorieName }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        kategorienLaden(); // Kategorien neu laden, um die Liste zu aktualisieren
+    })
+    .catch(error => {
+        console.error('Fehler beim Hinzufügen der Kategorie:', error);
+    });
 }

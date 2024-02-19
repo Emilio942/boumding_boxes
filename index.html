@@ -2,19 +2,28 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bildbearbeitung</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategorienverwaltung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .kategorie-container {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="fortschrittsbalkenContainer">
-        <div id="fortschritt">20%</div>
+    <h2>Kategorienverwaltung</h2>
+    <div class="kategorie-container" id="kategorieContainer">
+        <!-- Kategorien werden hier geladen -->
     </div>
-    <aside id="kategorienListe">
-        <!-- Kategorien werden hier eingefügt -->
-    </aside>
-    <main id="bildContainer">
-        <img id="aktuellesBild" src="" alt="Aktuelles Bild">
-    </main>
+    <div>
+        <input type="text" id="kategorieName" placeholder="Kategoriename">
+        <button onclick="kategorieHinzufuegen()">Kategorie hinzufügen</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
