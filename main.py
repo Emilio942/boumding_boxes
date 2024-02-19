@@ -11,6 +11,7 @@ kategorien_pfad = "./img"  # Pfad zu den Kategorien/Bildern
 def home():
     return send_from_directory(current_directory, 'index.html')
 
+
 @app.route('/api/kategorien', methods=['GET'])
 def get_kategorien():
     kategorien = [name for name in os.listdir(kategorien_pfad) if os.path.isdir(os.path.join(kategorien_pfad, name))]
