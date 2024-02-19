@@ -22,8 +22,12 @@ def home():
 
 @app.route('/api/kategorien', methods=['GET'])
 def get_kategorien():
-    kategorien = [name for name in os.listdir(kategorien_pfad) if os.path.isdir(os.path.join(kategorien_pfad, name))]
-    return jsonify(kategorien)
+    try:
+        kategorien = [name for name in os.listdir(kategorien_pfad) if os.path.isdir(os.path.join(kategorien_pfad, name))]
+        return jsonify(kategorien)
+    except OSError as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/api/objekt_daten', methods=['POST'])
 def speichere_objekt_daten():
