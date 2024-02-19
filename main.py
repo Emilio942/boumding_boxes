@@ -6,6 +6,8 @@ app = Flask(__name__, static_folder='.')
 json_dateipfad = "./objekte.json"
 # Der Pfad zum aktuellen Verzeichnis
 current_directory = os.getcwd()
+# Vorher festlegen, wo sich die Kategorien befinden
+kategorien_pfad = "~/Dokumente/ai/Objekterkennungssystem/img"
 
 @app.route('/')
 def home():

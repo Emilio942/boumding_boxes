@@ -90,3 +90,17 @@ function kategorieHinzufuegen() {
         console.error('Fehler beim Hinzufügen der Kategorie:', error);
     });
 }
+// Beispiel JavaScript zum Abrufen und Anzeigen der Kategorien
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/kategorien')
+        .then(response => response.json())
+        .then(kategorien => {
+            const container = document.getElementById('kategorien-container');
+            kategorien.forEach(kategorie => {
+                const div = document.createElement('div');
+                div.textContent = kategorie;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => console.error('Fehler beim Laden der Kategorien:', error));
+});
