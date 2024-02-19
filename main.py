@@ -10,7 +10,7 @@ current_directory = os.getcwd()
 @app.route('/')
 def home():
     # Verwendet das aktuelle Verzeichnis, um index.html zu senden
-    return send_from_directory(current_directory, 'index.html'
+    return send_from_directory(current_directory, 'index.html')
 
 # Kategorien basierend auf Ordnern lesen
 @app.route('/api/kategorien', methods=['GET'])
