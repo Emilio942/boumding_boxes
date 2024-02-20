@@ -3,6 +3,7 @@ from tkinter import filedialog, Listbox, messagebox
 from PIL import Image, ImageTk
 import os
 import json
+import sqlite3 
 # Datenbank-Setup
 
 db_path = 'bounding_boxes.db'
