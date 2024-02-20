@@ -60,8 +60,8 @@ class BoundingBoxApp:
         # Canvas für die Bildanzeige.
         self.canvas = tk.Canvas(self.root, width=800, height=600, bg='white')
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
-        self.canvas.bind('<Button-1>', self.on_canvas_click)
-        self.canvas.bind('<B1-Motion>', self.on_canvas_drag)
+        # self.canvas.bind('<Button-1>', self.on_canvas_click)
+        # self.canvas.bind('<B1-Motion>', self.on_canvas_drag)
         self.canvas.bind('<ButtonRelease-1>', self.on_canvas_release)
 
         # Rahmen für die Steuerungsbuttons.
