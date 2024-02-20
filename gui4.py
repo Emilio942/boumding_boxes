@@ -85,7 +85,7 @@ class BoundingBoxApp:
         self.progress.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
         # self.preview_button = ttk.Button(self.frame_buttons, text="Bildervorschau", command=self.show_image_previews)
-        self.preview_button.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+        # self.preview_button.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
     def load_categories(self):
         """
