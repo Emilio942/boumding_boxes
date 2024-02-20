@@ -338,32 +338,32 @@ class BoundingBoxApp:
         self.canvas.delete("all")  # Löscht alles vom Canvas.
 
 
-    def load_images(self):
-        """
-        Lädt alle Bildpfade der ausgewählten Kategorie und bereitet sie für die Anzeige vor.
+    # def load_images(self):
+    #     """
+    #     Lädt alle Bildpfade der ausgewählten Kategorie und bereitet sie für die Anzeige vor.
 
-        Diese Methode wird aufgerufen, nachdem der Benutzer eine Kategorie ausgewählt hat.
-        Sie durchsucht das entsprechende Verzeichnis nach allen Bildern und speichert ihre Pfade
-        in einer Liste. Anschließend wird das erste Bild zur Anzeige bereitgestellt.
-        """
-        # Überprüft, ob eine Kategorie ausgewählt wurde.
-        if self.current_category:
-            # Erstellt den Pfad zum Verzeichnis der ausgewählten Kategorie.
-            category_path = os.path.join(self.img_folder, self.current_category)
+    #     Diese Methode wird aufgerufen, nachdem der Benutzer eine Kategorie ausgewählt hat.
+    #     Sie durchsucht das entsprechende Verzeichnis nach allen Bildern und speichert ihre Pfade
+    #     in einer Liste. Anschließend wird das erste Bild zur Anzeige bereitgestellt.
+    #     """
+    #     # Überprüft, ob eine Kategorie ausgewählt wurde.
+    #     if self.current_category:
+    #         # Erstellt den Pfad zum Verzeichnis der ausgewählten Kategorie.
+    #         category_path = os.path.join(self.img_folder, self.current_category)
 
-            # Sammelt alle Bildpfade in diesem Verzeichnis.
-            self.images = [os.path.join(category_path, img) for img in os.listdir(category_path) if os.path.isfile(os.path.join(category_path, img))]
+    #         # Sammelt alle Bildpfade in diesem Verzeichnis.
+    #         self.images = [os.path.join(category_path, img) for img in os.listdir(category_path) if os.path.isfile(os.path.join(category_path, img))]
 
-            # Setzt den Index des aktuellen Bildes zurück.
-            self.current_image_index = 0
+    #         # Setzt den Index des aktuellen Bildes zurück.
+    #         self.current_image_index = 0
 
-            # Bereitet das erste Bild zur Anzeige vor, wenn vorhanden.
-            if self.images:
-                self.load_and_display_image(self.images[self.current_image_index])
-            else:
-                messagebox.showinfo("Info", "Keine Bilder in dieser Kategorie gefunden.")
-        else:
-            messagebox.showinfo("Info", "Bitte wählen Sie zuerst eine Kategorie aus.")
+    #         # Bereitet das erste Bild zur Anzeige vor, wenn vorhanden.
+    #         if self.images:
+    #             self.load_and_display_image(self.images[self.current_image_index])
+    #         else:
+    #             messagebox.showinfo("Info", "Keine Bilder in dieser Kategorie gefunden.")
+    #     else:
+    #         messagebox.showinfo("Info", "Bitte wählen Sie zuerst eine Kategorie aus.")
 
 
     def next_image(self):
