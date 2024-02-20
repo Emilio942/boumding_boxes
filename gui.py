@@ -3,6 +3,24 @@ from tkinter import filedialog, Listbox, messagebox
 from PIL import Image, ImageTk
 import os
 import json
+# Datenbank-Setup
+
+db_path = 'bounding_boxes.db'
+conn = sqlite3.connect(db_path)
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS boxes (
+    id INTEGER PRIMARY KEY,
+    image_id TEXT NOT NULL,
+    category TEXT NOT NULL,
+    x1 INTEGER NOT NULL,
+    y1 INTEGER NOT NULL,
+    x2 INTEGER NOT NULL,
+    y2 INTEGER NOT NULL,
+    UNIQUE(image_id, category)
+)
+''')
+conn.commit()
 
 class BoundingBoxApp:
     def __init__(self, root, img_folder, obj_data_file):
@@ -58,15 +76,22 @@ class BoundingBoxApp:
             self.save_bounding_box(bbox)
             self.rect_id = None
 
-    def save_bounding_box(self, bbox):
-        # Hier könntest du die Bounding Box speichern
-        print("Speichere Bounding Box:", bbox)
-        # Füge die Bounding Box-Daten zu self.obj_data hinzu
-        # Speichere self.obj_data in self.obj_data_file als JSON
+def save_bounding_box(self, image_id, category, bbox):
+    try:
+        cursor.execute('''
+            INSERT INTO boxes (image_id, category, x1, y1, x2, y2)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (image_id, category, bbox[0], bbox[1], bbox[2], bbox[3]))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        print(f"Eintrag für Image-ID {image_id} in Kategorie {category} existiert bereits.")
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
     img_folder = "./img"  # Anpassen an deinen Pfad
-    obj_data_file = "objekte.json"
     app = BoundingBoxApp(root, img_folder, obj_data_file)
     root.mainloop()
+# Vergiss nicht, die Verbindung zu schließen, wenn du fertig bist
+conn.close()
