@@ -228,7 +228,7 @@ class BoundingBoxApp:
             # Bei einem IntegrityError (z.B. wegen eines doppelten Eintrags) wird eine Fehlermeldung angezeigt.
             messagebox.showerror("Fehler", f"Eintrag für Image-ID {image_id} in Kategorie {category} existiert bereits.")
 
-     def is_image_processed(self, image_id, category):
+    def is_image_processed(self, image_id, category):
         """
         Überprüft, ob ein Bild bereits verarbeitet wurde, indem nach einem Eintrag in der Datenbank gesucht wird.
 
