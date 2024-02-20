@@ -5,6 +5,7 @@ import os
 import sqlite3
 import random
 import csv
+from tkinter import ttk
 
 class BoundingBoxApp:
     def __init__(self, root, img_folder):
@@ -80,10 +81,10 @@ class BoundingBoxApp:
         # Optional: Weitere UI-Elemente wie Fortschrittsbalken und Bildervorschau-Button können hier hinzugefügt werden.
         
         # Erstellt einen Fortschrittsbalken und fügt ihn zum Frame für die Buttons hinzu.
-        self.progress = tk.Progressbar(self.frame_buttons, orient="horizontal", length=200, mode="determinate")
+        self.progress = ttk.Progressbar(self.frame_buttons, orient="horizontal", length=200, mode="determinate")
         self.progress.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
-        self.preview_button = tk.Button(self.frame_buttons, text="Bildervorschau", command=self.show_image_previews)
+        self.preview_button = ttk.Button(self.frame_buttons, text="Bildervorschau", command=self.show_image_previews)
         self.preview_button.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
     def load_categories(self):
