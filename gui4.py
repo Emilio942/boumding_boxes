@@ -471,7 +471,7 @@ class BoundingBoxApp:
             self.photo_img = photo_image  # Speichert eine Referenz, um das Bild im Speicher zu behalten.
         else:
             # Falls das Bild nicht geladen werden konnte, wird eine Fehlermeldung angezeigt.
-        #     messagebox.showerror("Fehler", "Das Bild konnte nicht geladen werden.")
+            messagebox.showerror("Fehler", "Das Bild konnte nicht geladen werden.")
 
             """
         Lädt ein Bild von einem gegebenen Pfad, passt seine Größe an, und zeigt es auf dem Canvas an.
@@ -480,30 +480,27 @@ class BoundingBoxApp:
         Parameter:
         image_path (str): Der Pfad zum Bild, das geladen und angezeigt werden soll.
         """
-        try:
-            # Öffnet das Bild und passt seine Größe an, um es innerhalb der Canvas-Größe optimal darzustellen.
-            img = Image.open(image_path)
-            img.thumbnail((self.canvas.winfo_width(), self.canvas.winfo_height()), Image.ANTIALIAS)
-            self.photo_img = ImageTk.PhotoImage(img)
+        
+        #     # Öffnet das Bild und passt seine Größe an, um es innerhalb der Canvas-Größe optimal darzustellen.
+        #     img = Image.open(image_path)
+        #     img.thumbnail((self.canvas.winfo_width(), self.canvas.winfo_height()), Image.ANTIALIAS)
+        #     self.photo_img = ImageTk.PhotoImage(img)
 
-            # Berechnet die Position, um das Bild zentriert auf dem Canvas anzuzeigen.
-            img_width, img_height = img.size
-            canvas_width = self.canvas.winfo_width()
-            canvas_height = self.canvas.winfo_height()
-            x_position = (canvas_width - img_width) // 2
-            y_position = (canvas_height - img_height) // 2
+        #     # Berechnet die Position, um das Bild zentriert auf dem Canvas anzuzeigen.
+        #     img_width, img_height = img.size
+        #     canvas_width = self.canvas.winfo_width()
+        #     canvas_height = self.canvas.winfo_height()
+        #     x_position = (canvas_width - img_width) // 2
+        #     y_position = (canvas_height - img_height) // 2
 
-            # Löscht den aktuellen Inhalt des Canvas und zeigt das neue Bild an.
-            self.canvas.delete("all")
-            self.canvas.create_image(x_position, y_position, anchor=tk.NW, image=self.photo_img)
+        #     # Löscht den aktuellen Inhalt des Canvas und zeigt das neue Bild an.
+        #     self.canvas.delete("all")
+        #     self.canvas.create_image(x_position, y_position, anchor=tk.NW, image=self.photo_img)
 
-            # Speichert die aktuelle Bildposition und -größe für spätere Verwendung.
-            self.current_image_path = image_path
-            self.current_image_position = (x_position, y_position, img_width, img_height)
-        except Exception as e:
-                messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
-            return None
-
+        #     # Speichert die aktuelle Bildposition und -größe für spätere Verwendung.
+        #     self.current_image_path = image_path
+        # self.current_image_position = (x_position, y_position, img_width, img_height)
+        
     def load_image(self, image_path):
         """
         Lädt das Bild von einem gegebenen Pfad und bereitet es für die Anzeige vor.
