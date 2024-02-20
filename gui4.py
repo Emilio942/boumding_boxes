@@ -704,6 +704,7 @@ def finde_image_folder_path(folder_name="img", root_folder='./'):
     for root, dirs, files in os.walk(root_folder):
         if folder_name in dirs:
             return os.path.join(root, folder_name)
+        print("sorry")
     return None
 
 
