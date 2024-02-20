@@ -14,7 +14,7 @@ class BoundingBoxApp:
         self.db_path = 'bounding_boxes.db'
         self.conn = None
         self.cursor = None
-        self.photo_img = None
+        self.photo_img = "./img/schraube/juu0pj0d.png"
         self.start_x, self.start_y = None, None
         self.rect_id = None
         self.current_image_index = 0
