@@ -51,26 +51,30 @@ class BoundingBoxApp:
         categories = [name for name in os.listdir(self.img_folder) if os.path.isdir(os.path.join(self.img_folder, name))]
         for category in categories:
             self.kategorien_listbox.insert(tk.END, category)
-
+    def load_images(self, image_path):
+            try:
+                
+                category_path = os.path.join(self.img_folder, self.current_category)
+                self.images = [os.path.join(category_path, img) for img in os.listdir(category_path) if os.path.isfile(os.path.join(category_path, img))]
+                self.current_image_index = 0
+                self.display_next_image()
+        
+                return 
+            except Exception as e:
+                messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
+                return None
     def on_category_select(self, event):
         selection = self.kategorien_listbox.curselection()
         if selection:
             self.current_category = self.kategorien_listbox.get(selection[0])
             self.load_images()
 
-    def load_image(self, image_path):
-        try:
-            img = Image.open(image_path)
-            img.thumbnail((800, 600), Image.ANTIALIAS)
-            return ImageTk.PhotoImage(img)
-        except Exception as e:
-            messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
-            return None
+    
 
     def display_next_image(self):
         if self.current_image_index < len(self.images):
             self.current_image_path = self.images[self.current_image_index]
-            self.photo_img = self.load_image(self.current_image_path)
+            self.photo_img = self.load_images(self.current_image_path)
             if self.photo_img:
                 self.canvas.create_image(400, 300, image=self.photo_img, anchor=tk.CENTER)
                 self.current_image_index += 1
