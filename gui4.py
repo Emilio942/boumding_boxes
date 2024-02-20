@@ -18,7 +18,7 @@ class BoundingBoxApp:
         self.current_image_index = 0
         self.current_image_path = None
         self.images = []
-
+        self.image_cache = {}
         self.setup_database()
         self.setup_ui()
         self.load_categories()
@@ -580,6 +580,8 @@ class BoundingBoxApp:
 
 
 
+
+
     def export_bounding_boxes(self):
         """
         Exportiert die Bounding Box-Daten aller Bilder der aktuellen Kategorie in eine CSV-Datei.
@@ -731,3 +733,40 @@ class BoundingBoxApp:
         self.canvas.create_line(top_left, bottom_left, fill="red")  # Linke Kante
         self.canvas.create_line(bottom_left, bottom_right, fill="red")  # Untere Kante
         self.canvas.create_line(top_right, bottom_right, fill="red")  # Rechte Kante
+
+
+    def load_image(self, image_path):
+        # Prüft, ob das Bild bereits im Cache ist
+        if image_path not in self.image_cache:
+            try:
+                img = Image.open(image_path)
+                img.thumbnail((800, 600), Image.ANTIALIAS)
+                self.image_cache[image_path] = ImageTk.PhotoImage(img)
+            except Exception as e:
+                messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
+                return None
+        return self.image_cache[image_path]
+
+def finde_image_folder_path(folder_name="img", root_folder='./'):
+    """
+    Sucht rekursiv nach einem Ordner im angegebenen Wurzelverzeichnis und allen Unterordnern.
+    
+    :param folder_name: Name des gesuchten Ordners.
+    :param root_folder: Wurzelverzeichnis, in dem die Suche beginnt.
+    :return: Den Pfad des gefundenen Ordners oder None, wenn der Ordner nicht gefunden wurde.
+    """
+    for root, dirs, files in os.walk(root_folder):
+        if folder_name in dirs:
+            return os.path.join(root, folder_name)
+    return None
+
+
+
+def main():
+    root = tk.Tk()
+    img_folder = finde_image_folder_path()  # Pfad zum Ordner mit Bildern anpassen
+    app = BoundingBoxApp(root, img_folder)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
