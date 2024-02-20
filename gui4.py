@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import os
 import sqlite3
 import random
+import csv
 
 class BoundingBoxApp:
     def __init__(self, root, img_folder):
@@ -79,7 +80,7 @@ class BoundingBoxApp:
         # Optional: Weitere UI-Elemente wie Fortschrittsbalken und Bildervorschau-Button können hier hinzugefügt werden.
         
         # Erstellt einen Fortschrittsbalken und fügt ihn zum Frame für die Buttons hinzu.
-        self.progress = ttk.Progressbar(self.frame_buttons, orient="horizontal", length=200, mode="determinate")
+        self.progress = tk.Progressbar(self.frame_buttons, orient="horizontal", length=200, mode="determinate")
         self.progress.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
         self.preview_button = tk.Button(self.frame_buttons, text="Bildervorschau", command=self.show_image_previews)
@@ -115,8 +116,8 @@ class BoundingBoxApp:
                 # Berechnen der Koordinaten relativ zum Bild.
                 box_x1 = self.start_x - x_position
                 box_y1 = self.start_y - y_position
-                box_x2 = end_x - x_position
-                box_y2 = end_y - y_position
+                box_x2 = self.end_x - x_position
+                box_y2 = self.end_y - y_position
                 
                 # Stelle sicher, dass die Koordinaten innerhalb der Bildgrenzen liegen.
                 box_x1, box_y1, box_x2, box_y2 = self.clamp_coordinates(box_x1, box_y1, box_x2, box_y2, img_width, img_height)
