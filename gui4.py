@@ -84,7 +84,7 @@ class BoundingBoxApp:
         self.progress = ttk.Progressbar(self.frame_buttons, orient="horizontal", length=200, mode="determinate")
         self.progress.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
-        self.preview_button = ttk.Button(self.frame_buttons, text="Bildervorschau", command=self.show_image_previews)
+        # self.preview_button = ttk.Button(self.frame_buttons, text="Bildervorschau", command=self.show_image_previews)
         self.preview_button.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
 
     def load_categories(self):
@@ -582,36 +582,36 @@ class BoundingBoxApp:
             messagebox.showerror("Fehler", f"Fehler beim Exportieren der Bounding Box-Daten: {e}")
 
 
-    def show_image_previews(self):
-        """
-        Zeigt eine Vorschau der Bilder in der aktuellen Kategorie an.
+    # def show_image_previews(self):
+    #     """
+    #     Zeigt eine Vorschau der Bilder in der aktuellen Kategorie an.
 
-        Diese Methode erstellt ein neues Fenster, das kleine Vorschaubilder aller Bilder
-        in der ausgewählten Kategorie anzeigt. Es ermöglicht den Benutzern, einen schnellen
-        Überblick zu erhalten, ohne jedes Bild einzeln laden zu müssen.
-        """
-        if not self.current_category:
-            messagebox.showinfo("Info", "Bitte wählen Sie zuerst eine Kategorie aus.")
-            return
+    #     Diese Methode erstellt ein neues Fenster, das kleine Vorschaubilder aller Bilder
+    #     in der ausgewählten Kategorie anzeigt. Es ermöglicht den Benutzern, einen schnellen
+    #     Überblick zu erhalten, ohne jedes Bild einzeln laden zu müssen.
+    #     """
+    #     if not self.current_category:
+    #         messagebox.showinfo("Info", "Bitte wählen Sie zuerst eine Kategorie aus.")
+    #         return
 
-        # Erstellt ein neues Fenster für die Bildervorschau.
-        preview_window = tk.Toplevel(self.root)
-        preview_window.title("Bildervorschau")
+    #     # Erstellt ein neues Fenster für die Bildervorschau.
+    #     preview_window = tk.Toplevel(self.root)
+    #     preview_window.title("Bildervorschau")
 
-        # Sammelt alle Bildpfade in der aktuellen Kategorie.
-        image_paths = self.images  # Nutzt die bereits geladene Liste der Bildpfade.
+    #     # Sammelt alle Bildpfade in der aktuellen Kategorie.
+    #     image_paths = self.images  # Nutzt die bereits geladene Liste der Bildpfade.
 
-        for img_path in image_paths:
-            # Lädt und zeigt jedes Bild als Vorschau an.
-            try:
-                img = Image.open(img_path)
-                img.thumbnail((100, 100), Image.ANTIALIAS)  # Erstellt eine kleine Vorschau.
-                photo = ImageTk.PhotoImage(img)
-                label = tk.Label(preview_window, image=photo)
-                label.image = photo  # Hält eine Referenz, um das Bild im Speicher zu behalten.
-                label.pack(side=tk.LEFT, padx=5, pady=5)
-            except Exception as e:
-                continue  # Bei einem Fehler wird das Bild übersprungen.
+    #     for img_path in image_paths:
+    #         # Lädt und zeigt jedes Bild als Vorschau an.
+    #         try:
+    #             img = Image.open(img_path)
+    #             img.thumbnail((100, 100), Image.ANTIALIAS)  # Erstellt eine kleine Vorschau.
+    #             photo = ImageTk.PhotoImage(img)
+    #             label = tk.Label(preview_window, image=photo)
+    #             label.image = photo  # Hält eine Referenz, um das Bild im Speicher zu behalten.
+    #             label.pack(side=tk.LEFT, padx=5, pady=5)
+    #         except Exception as e:
+    #             continue  # Bei einem Fehler wird das Bild übersprungen.
             
     # Beispiel einer Methode, die visuelle Rückmeldung gibt und die Fehlerkorrektur erleichtert
     def delete_last_bounding_box(self):
