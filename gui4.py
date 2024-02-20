@@ -449,28 +449,28 @@ class BoundingBoxApp:
 
 
     def load_and_display_image(self, image_path):
-        # """
-        # Lädt ein Bild von einem gegebenen Pfad und zeigt es auf dem Canvas an.
+        """
+        Lädt ein Bild von einem gegebenen Pfad und zeigt es auf dem Canvas an.
 
-        # Diese Methode nutzt die 'load_image' Funktion, um das Bild zu laden,
-        # und zeigt es dann auf dem Canvas an. Es wird angenommen, dass 'load_image'
-        # ein PhotoImage-Objekt zurückgibt, das im Canvas verwendet werden kann.
-        # Falls das Laden fehlschlägt, wird eine Fehlermeldung angezeigt.
+        Diese Methode nutzt die 'load_image' Funktion, um das Bild zu laden,
+        und zeigt es dann auf dem Canvas an. Es wird angenommen, dass 'load_image'
+        ein PhotoImage-Objekt zurückgibt, das im Canvas verwendet werden kann.
+        Falls das Laden fehlschlägt, wird eine Fehlermeldung angezeigt.
 
-        # Parameter:
-        # image_path (str): Der Pfad zum Bild, das geladen und angezeigt werden soll.
-        # """
-        # # Löscht zuerst den aktuellen Inhalt des Canvas.
-        # self.canvas.delete("all")
+        Parameter:
+        image_path (str): Der Pfad zum Bild, das geladen und angezeigt werden soll.
+        """
+        # Löscht zuerst den aktuellen Inhalt des Canvas.
+        self.canvas.delete("all")
 
-        # # Versucht, das Bild zu laden.
-        # photo_image = self.load_image(image_path)
-        # if photo_image:
-        #     # Zeigt das geladene Bild auf dem Canvas an, zentriert.
-        #     self.canvas.create_image(400, 300, image=photo_image, anchor=tk.CENTER)
-        #     self.photo_img = photo_image  # Speichert eine Referenz, um das Bild im Speicher zu behalten.
-        # else:
-        #     # Falls das Bild nicht geladen werden konnte, wird eine Fehlermeldung angezeigt.
+        # Versucht, das Bild zu laden.
+        photo_image = self.load_image(image_path)
+        if photo_image:
+            # Zeigt das geladene Bild auf dem Canvas an, zentriert.
+            self.canvas.create_image(400, 300, image=photo_image, anchor=tk.CENTER)
+            self.photo_img = photo_image  # Speichert eine Referenz, um das Bild im Speicher zu behalten.
+        else:
+            # Falls das Bild nicht geladen werden konnte, wird eine Fehlermeldung angezeigt.
         #     messagebox.showerror("Fehler", "Das Bild konnte nicht geladen werden.")
 
             """
@@ -501,7 +501,7 @@ class BoundingBoxApp:
             self.current_image_path = image_path
             self.current_image_position = (x_position, y_position, img_width, img_height)
         except Exception as e:
-            messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
+                messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
             return None
 
     def load_image(self, image_path):
