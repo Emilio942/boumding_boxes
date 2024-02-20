@@ -4,11 +4,14 @@ from PIL import Image, ImageTk
 import os
 import json
 import sqlite3 
+import random
+
 # Datenbank-Setup
 # Initialisierung der SQLite-Datenbank für die Speicherung der Bounding Boxes
 db_path = 'bounding_boxes.db'
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
+
 # Erstellen der Tabelle 'boxes', wenn sie nicht existiert. Jede Box wird eindeutig durch ihre Image-ID und Kategorie identifiziert.
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS boxes (
@@ -24,8 +27,10 @@ cursor.execute('''
 ''')
 conn.commit()
 
+
 class BoundingBoxApp:
     # Initialisiert die Hauptkomponenten der Anwendung.
+
     def __init__(self, root, img_folder):
         self.root = root  # Das Hauptfenster der Anwendung
         self.img_folder = img_folder  # Der Pfad zum Ordner, der die Bilder enthält
@@ -51,6 +56,7 @@ class BoundingBoxApp:
         self.load_categories()  # Lädt die Kategorien aus den Bildordnern.
 
     # Lädt die Bildkategorien aus den Ordnernamen und fügt sie der Listbox hinzu.
+
     def load_categories(self):
         try:
             categories = [name for name in os.listdir(self.img_folder) if os.path.isdir(os.path.join(self.img_folder, name))]
@@ -107,33 +113,61 @@ class BoundingBoxApp:
                 messagebox.showinfo("Info", "Kein Bild ausgewählt.")
             
             self.rect_id = None
-
+    def load_image(self, image_path):
+        """Lädt ein einzelnes Bild und gibt das PhotoImage-Objekt zurück."""
+        try:
+            img = Image.open(image_path)
+            img.thumbnail((800, 600), Image.ANTIALIAS)
+            return ImageTk.PhotoImage(img)
+        except Exception as e:
+            messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
+            return None
+        
+    def display_image(self):
+        """Zeigt das geladene Bild auf dem Canvas an."""
+        if self.photo_img:  # Stellt sicher, dass photo_img existiert.
+            self.canvas.create_image(400, 300, image=self.photo_img, anchor=tk.CENTER)
+        else:
+            messagebox.showerror("Fehler", "Es gibt kein Bild zum Anzeigen.")
+    def select_random_image_path(self, image_paths):
+        """Wählt einen zufälligen Bildpfad aus der Liste aus und gibt ihn zurück."""
+        if image_paths:
+            return random.choice(image_paths)
+        else:
+            return None
+        
+    def load_and_display_image(self, image_path):
+        """Lädt das Bild vom angegebenen Pfad und zeigt es an, wenn es existiert."""
+        self.photo_img = self.load_image(image_path)  # Laden des Bildes
+        if self.photo_img:
+            self.display_image()  # Anzeigen des Bildes auf dem Canvas
+    
     def process_images_in_category(self):
-        # Annahme: Die ausgewählte Kategorie wird aus der Listbox geholt
+        """Prozessiert eine zufällige Auswahl von Bildern in der gewählten Kategorie."""
         selected_category_index = self.kategorien_listbox.curselection()
         if not selected_category_index:
             messagebox.showinfo("Info", "Bitte wählen Sie eine Kategorie aus.")
             return
         selected_category = self.kategorien_listbox.get(selected_category_index[0])
 
-        # Liste aller Bildpfade in der ausgewählten Kategorie
-        image_paths = [os.path.join(self.img_folder, selected_category, f) for f in os.listdir(os.path.join(self.img_folder, selected_category)) if os.path.isfile(os.path.join(self.img_folder, selected_category, f))]
+        image_paths = [os.path.join(self.img_folder, selected_category, f)
+                       for f in os.listdir(os.path.join(self.img_folder, selected_category))
+                       if os.path.isfile(os.path.join(self.img_folder, selected_category, f))]
 
-        # Berechnung von 20% der Bilder
         total_images = len(image_paths)
         validation_set_size = int(total_images * 0.2)
-
+        
         # Zufällige Auswahl von Bildern für die Verarbeitung
         selected_images = random.sample(image_paths, validation_set_size)
-
-        # Verarbeitung der ausgewählten Bilder
+        
         for image_path in selected_images:
-            image_id = os.path.basename(image_path).split('.')[0]
-            if not self.is_image_processed(image_id, selected_category):
-                self.process_image(image_path, selected_category)
+            image_id = self.get_image_id_from_path(image_path)
+            category = self.get_category_from_path(image_path)
+            if not self.is_image_processed(image_id, category):
+                self.load_and_display_image(image_path)  # Laden und Anzeigen des Bildes
+    
+        self.switch_to_next_category() 
 
-        # Automatisches Wechseln zur nächsten Kategorie, falls implementiert
-        self.switch_to_next_category()
 
     def switch_to_next_category(self):
         # Logik zum Wechseln zur nächsten Kategorie
@@ -160,5 +194,5 @@ if __name__ == "__main__":
     img_folder = "./img"  # Anpassen an deinen Pfad
     app = BoundingBoxApp(root, img_folder)
     root.mainloop()
-# Vergiss nicht, die Verbindung zu schließen, wenn du fertig bist
-conn.close()
+    # Vergiss nicht, die Verbindung zu schließen, wenn du fertig bist
+    conn.close()
