@@ -108,7 +108,7 @@ class BoundingBoxApp:
         """
         # Sicherstellen, dass eine Bounding Box existiert und ein Bild ausgewählt wurde.
         if self.rect_id and self.current_image_path:
-            end_x, end_y = event.x, event.y
+            self.end_x, self.end_y = event.x, event.y
             if self.current_image_position:
                 x_position, y_position, img_width, img_height = self.current_image_position
                 
@@ -201,39 +201,6 @@ class BoundingBoxApp:
                 messagebox.showerror("Fehler", "Das Bild konnte nicht geladen werden.")
         except Exception as e:
             messagebox.showerror("Fehler", f"Das Bild konnte nicht geladen werden: {e}")
-
-    def on_canvas_release(self, event):
-         """
-        Wird aufgerufen, wenn der Benutzer die Maustaste loslässt, nachdem er eine Bounding Box gezeichnet hat.
-
-        Parameter:
-        event: Ein Event-Objekt, das Informationen über das Mausereignis enthält, einschließlich der Position.
-
-        Diese Methode schließt die Zeichnung einer Bounding Box ab, indem sie die Koordinaten speichert
-        und die Details der Bounding Box in der Datenbank sichert, falls ein Bild ausgewählt wurde.
-        """
-        # Ermitteln der Endkoordinaten der Bounding Box
-        end_x, end_y = event.x, event.y
-
-        # Sicherstellen, dass eine Bounding Box existiert (d.h., der Benutzer hat tatsächlich eine gezeichnet).
-        if self.rect_id:
-            # Die Koordinaten der Bounding Box werden berechnet und in einer Tupel gespeichert.
-            bbox = (self.start_x, self.start_y, end_x, end_y)
-            
-            # Überprüfen, ob ein Bild ausgewählt wurde, bevor die Bounding Box gespeichert wird.
-            if self.current_image_path:
-                # Extrahieren der Image-ID und der Kategorie aus dem Bildpfad.
-                image_id = self.get_image_id_from_path(self.current_image_path)
-                category = self.get_category_from_path(self.current_image_path)
-                
-                # Speichern der Bounding Box-Daten in der Datenbank.
-                self.save_bounding_box(image_id, category, bbox)
-            else:
-                # Benutzer informieren, wenn kein Bild ausgewählt wurde.
-                messagebox.showinfo("Info", "Kein Bild ausgewählt.")
-            
-            # Zurücksetzen der rect_id, um anzuzeigen, dass die Zeichnung der aktuellen Bounding Box abgeschlossen ist.
-            self.rect_id = None 
 
 
     
