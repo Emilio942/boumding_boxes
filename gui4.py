@@ -579,24 +579,6 @@ class BoundingBoxApp:
         except Exception as e:
             messagebox.showerror("Fehler", f"Fehler beim Exportieren der Bounding Box-Daten: {e}")
 
-        
-    def export_bounding_boxes(self):
-        """
-        Erweitert die Exportfunktion um einen Fortschrittsbalken.
-        """
-        # Vorherige Exportlogik...
-        
-        # Initialisiert den Fortschrittsbalken.
-        self.progress["value"] = 0  # Setzt den Startwert des Fortschrittsbalkens.
-        self.progress["maximum"] = len(all_boxes)  # Setzt den Maximalwert gleich der Anzahl der zu exportierenden Boxen.
-            
-        for box in all_boxes:
-        # Exportlogik für jede Bounding Box...
-        self.progress["value"] += 1  # Aktualisiert den Fortschrittsbalken für jede verarbeitete Box.
-        self.root.update_idletasks()  # Aktualisiert die UI, um die Veränderung am Fortschrittsbalken anzuzeigen.
-            
-        messagebox.showinfo("Erfolg", f"Bounding Box-Daten wurden erfolgreich nach {filename} exportiert.")
-        self.progress["value"] = 0  # Setzt den Fortschrittsbalken zurück, wenn der Vorgang abgeschlossen ist.
 
     def show_image_previews(self):
         """
