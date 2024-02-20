@@ -24,10 +24,10 @@ cursor.execute('''
 conn.commit()
 
 class BoundingBoxApp:
-    def __init__(self, root, img_folder, obj_data_file):
+    def __init__(self, root, img_folder):
         self.root = root
         self.img_folder = img_folder
-        self.obj_data_file = obj_data_file
+        
         self.root.title("Bounding Box Zeichner")
 
         self.kategorien_listbox = Listbox(self.root)
@@ -92,7 +92,7 @@ def save_bounding_box(self, image_id, category, bbox):
 if __name__ == "__main__":
     root = tk.Tk()
     img_folder = "./img"  # Anpassen an deinen Pfad
-    app = BoundingBoxApp(root, img_folder, obj_data_file)
+    app = BoundingBoxApp(root, img_folder,)
     root.mainloop()
 # Vergiss nicht, die Verbindung zu schließen, wenn du fertig bist
 conn.close()
