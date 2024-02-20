@@ -79,11 +79,33 @@ class BoundingBoxApp:
             print(f"Eintrag für Image-ID {image_id} in Kategorie {category} existiert bereits.")
     # Beendet das Zeichnen der Bounding Box und speichert sie, wenn die Maustaste losgelassen wird.
     
+   
+
+    def get_image_id_from_path(image_path):
+        """
+            Extrahiert die Image-ID aus dem vollständigen Pfad des Bildes.
+            Annahme: Die Image-ID ist der Dateiname ohne Erweiterung.
+        """
+        return os.path.basename(image_path).split('.')[0]
+    def get_category_from_path(image_path):
+        """
+            Extrahiert den Kategorienamen aus dem vollständigen Pfad des Bildes.
+            Annahme: Die Kategorie ist der Name des übergeordneten Verzeichnisses des Bildes.
+        """
+        return os.path.basename(os.path.dirname(image_path))
+
     def on_canvas_release(self, event):
         end_x, end_y = event.x, event.y
         if self.rect_id:
             bbox = (self.start_x, self.start_y, end_x, end_y)
-            self.save_bounding_box(image_id=,category= ,bbox=bbox)  # Funktion zum Speichern der Box muss implementiert werden
+            
+            if hasattr(self, 'selected_image_path') and self.selected_image_path:
+                image_id = get_image_id_from_path(self.selected_image_path)
+                category = get_category_from_path(self.selected_image_path)
+                self.save_bounding_box(image_id=image_id, category=category, bbox=bbox)
+            else:
+                messagebox.showinfo("Info", "Kein Bild ausgewählt.")
+            
             self.rect_id = None
 
     def process_images_in_category(self):
