@@ -2,7 +2,7 @@
 
 This project is in the development stage of creating an image editing software focused on adding bounding boxes to images. It's designed to assist in object detection and annotation tasks, crucial for machine learning and data analysis applications. However, the tool is currently a work in progress, with functionalities being actively developed and refined.
 
-![Alt text for your image](path/to/your/robot_image.png)
+![Alt text for your image](DALL.webp)
 
 ## Concept Overview
 
