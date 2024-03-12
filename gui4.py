@@ -14,7 +14,7 @@ class BoundingBoxApp:
         self.db_path = 'bounding_boxes.db'
         self.conn = None
         self.cursor = None
-        self.photo_img = "./img/schraube/juu0pj0d.png"
+        self.photo_img = self.load_categories()  
         self.start_x, self.start_y = None, None
         self.rect_id = None
         self.current_image_index = 0
@@ -24,6 +24,14 @@ class BoundingBoxApp:
         self.setup_database()
         self.setup_ui()
         self.load_categories()
+    def auto_load_image_from_category(self, category_name):
+        # Versuche, die Kategorie in der Listbox zu finden und auszuwählen
+        try:
+            category_index = self.kategorien_listbox.get(0, tk.END).index(category_name)
+            self.kategorien_listbox.select_set(category_index)
+            self.on_category_select(None)  # Simuliere eine Kategorieauswahl
+        except ValueError:
+            messagebox.showerror("Fehler", f"Kategorie '{category_name}' nicht gefunden.")
 
     def setup_database(self):
         """Initialisiert die Datenbankverbindung und Tabellen."""
